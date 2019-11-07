@@ -2,24 +2,27 @@
 import requests
 import urllib.parse
 import sys
+from orderedset import OrderedSet
 
 class Crtsh:
     def __init__(self):
         self.base_url = 'https://crt.sh/?output=json&q={}'
         self.user_agent = 'Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko'
         self.headers = {'User-Agent' : self.user_agent}
+        self.session = requests.Session()
+        self.session.headers.update(self.headers)
 
     def get_domains(self, domain):
-        result = []
+        result = OrderedSet()
 
-        req = requests.get(self.base_url.format(domain), headers=self.headers)
+        req = self.session.get(self.base_url.format(domain), headers=self.headers)
 
         for entry in req.json():
             name_value = entry['name_value'].strip().lower()
-            if not name_value in result:
-                result.append(name_value)
 
-        return result
+            result.add(name_value)
+
+        return list(result)
 
 def parse_uri(arg):
     if arg.startswith('http://') or arg.startswith('https://'):
@@ -69,10 +72,10 @@ def main():
     import os
     import logging
 
-
+    #logging.basicConfig(level=logging.DEBUG)
     requests.packages.urllib3.disable_warnings()
 
-    domain_list = []
+    domain_list = OrderedSet()
 
     options = parse_arguments()
 
@@ -88,7 +91,7 @@ def main():
 
 
     if not options.url is None:
-        domain_list.append(clean_domain(options.url))
+        domain_list.add(clean_domain(options.url))
 
     elif not options.input_file_list is None:
         for input_file in options.input_file_list:
@@ -103,22 +106,22 @@ def main():
                 exit(1)
 
         for input_file in options.input_file_list:
-            lines = open(input_file, 'r', errors="replace").read().splitlines()
-            for line in [clean_domain(l) for l in lines]:
-                if not clean_domain in domain_list:
-                    domain_list.append(line)
-
+            with open(input_file, 'r', errors="replace") as infile:
+                for line in infile:
+                    line = clean_domain(line)
+                    domain_list.add(line)
+        domain_list = list(domain_list)
     elif check_stdin():
         lines = sys.stdin.readlines()
         for line in [clean_domain(l) for l in lines]:
-            if not line in domain_list:
-                domain_list.append(line)
+            domain_list.add(line)
+        domain_list = list(domain_list)
 
 
 
     crtsh = Crtsh()
 
-    final_result = []
+
 
     for domain in domain_list:
         domain = parse_uri(domain)
@@ -137,11 +140,11 @@ def main():
 
         if not options.silent:
             print_domains(result)
-        final_result += result
+        result += result
 
-    if not output_fd is None:
-        output_fd.writelines(final_result)
-        output_fd.close()
+        if not output_fd is None:
+            output_fd.writelines(result)
+    output_fd.close()
 
 if __name__ == '__main__':
 
