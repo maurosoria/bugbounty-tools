@@ -1,3 +1,7 @@
-Just for getting subdomains from bing 
+# Just for getting data from bing 
 
-Arguments: IP|domain
+* bingsubdomains.py: get subdomains
+* bingvhosts.py: resolve domains to all IP and get VHOSTS with ip: dork
+
+## TODO
+* Async/Multithread
