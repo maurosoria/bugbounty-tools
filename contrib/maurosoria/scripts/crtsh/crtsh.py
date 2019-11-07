@@ -6,7 +6,7 @@ from orderedset import OrderedSet
 
 class Crtsh:
     def __init__(self):
-        self.base_url = 'https://crt.sh/?output=json&q={}'
+        self.base_url = 'https://crt.sh/?output=json&q=%25.{}'
         self.user_agent = 'Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko'
         self.headers = {'User-Agent' : self.user_agent}
         self.session = requests.Session()
@@ -144,7 +144,8 @@ def main():
 
         if not output_fd is None:
             output_fd.writelines(result)
-    output_fd.close()
+    if not output_fd is None:
+        output_fd.close()
 
 if __name__ == '__main__':
 
