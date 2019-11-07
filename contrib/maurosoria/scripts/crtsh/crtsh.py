@@ -80,7 +80,7 @@ def main():
 
     if not options.output_file is None:
         try:
-            output_fd = open(output_file, 'w')
+            output_fd = open(options.output_file, 'w')
         except Exception as e:
             print('Cannot open output file \"{0}\"'.format(options.output_file))
             print(str(e))
