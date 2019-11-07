@@ -8,3 +8,6 @@ I coded this tool tonight so I haven't tested well yet. Please create an issue i
 
 ## TODO
 * Async/Multithread
+* Recursive
+* uniq output
+* --debug
