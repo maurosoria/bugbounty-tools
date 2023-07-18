@@ -1,5 +1,14 @@
+#!/usr/bin/env ruby
+# DNS Resolver - A script to resolve domain names to IP addresses.
+# Usage: ruby dns_resolver.rb [options] < input_file
+#        or
+#        cat input_file | ruby dns_resolver.rb [options]
+# Options:
+#   -v, --verbose    Display verbose output with hostname and IP address.
+
 require 'resolv'
 require 'set'
+require 'optparse'
 
 class Resolver
   attr_reader :ip_addresses
@@ -33,16 +42,20 @@ class Resolver
   end
 end
 
-def solve_ip_addresses(s)
+def solve_ip_addresses(s, verbose)
   r = Resolver.new(s)
-  r.ip_addresses
+  if verbose
+    r.ip_addresses.map { |ip| "#{s} #{ip}" }
+  else
+    r.ip_addresses
+  end
 end
 
-def main
+def main(options)
   lines = $stdin.read.split("\n").uniq
   resolved = Set.new
   lines.each_slice(30) do |batch|
-    batch_resolved = batch.map { |line| solve_ip_addresses(line) }.flatten.uniq
+    batch_resolved = batch.map { |line| solve_ip_addresses(line, options[:verbose]) }.flatten.uniq
     batch_resolved.each do |ip_addr|
       unless resolved.include?(ip_addr)
         resolved << ip_addr
@@ -52,4 +65,16 @@ def main
   end
 end
 
-main
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: ruby dns_resolver.rb [options] < input_file\n       or\n       cat input_file | ruby dns_resolver.rb [options]"
+  opts.on('-v', '--verbose', 'Display verbose output with hostname and IP address.') do
+    options[:verbose] = true
+  end
+  opts.on('-h', '--help', 'Display this help message.') do
+    puts opts
+    exit
+  end
+end.parse!
+
+main(options)

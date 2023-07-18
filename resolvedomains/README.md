@@ -9,11 +9,11 @@ cat domainlist.txt | python3 resolvedomains.py > ip_addresses
 ## Ruby Example:
 ```ruby
 cat domainlist.txt | ruby resolvedomains.rb > ip_addresses
+# useful for bbrf
+cat domainlist.txt | ruby resolvedomains.rb -v > ips_hosts 
 ```
 
-or
-
-```ruby
-cat domainlist.txt | resolvedomains.rb > ip_addresses
+```bash
+$ awk '{print $1}' ip_addresses_verbose > resolved_hosts
+$ awk '{print $2}' ip_addresses_verbose > ip_addresses
 ```
-
