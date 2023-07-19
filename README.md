@@ -14,7 +14,7 @@ This project exists thanks to all the people who contribute:
 
 ### Other Contributors
 
-- **[Ruevaughn](https://github.com/ruervaughn)**: [💻](https://github.com/maurosoria/bugbounty-tools/commits?author=ruervaughn "Code") [👀](https://github.com/maurosoria/bugbounty-tools/pulls?q=reviewed-by%3Aruervaughn "Reviewed Pull Requests") [🔧](https://github.com/maurosoria/bugbounty-tools/commits?author=ruervaughn "Maintenance") 
+- **[Ruevaughn](https://github.com/ruevaughn)**: [💻](https://github.com/maurosoria/bugbounty-tools/commits?author=ruevaughn "Code") [👀](https://github.com/maurosoria/bugbounty-tools/pulls?q=reviewed-by%3Aruevaughn "Reviewed Pull Requests") [🔧](https://github.com/maurosoria/bugbounty-tools/commits?author=ruevaughn "Maintenance") 
 
 ---
 
