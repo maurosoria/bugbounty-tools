@@ -17,3 +17,15 @@ cat domainlist.txt | ruby resolvedomains.rb -v > ips_hosts
 $ awk '{print $1}' ip_addresses_verbose > resolved_hosts
 $ awk '{print $2}' ip_addresses_verbose > ip_addresses
 ```
+
+## Go Exemple:
+#### Compile the resolvedomains.go file:
+
+$ go build -o resolvedomains resolvedomains.go
+
+```go
+$ cat domainlist.txt | go run .\resolvedomains.go
+or if you compile:
+$ resolvedomains.exe domainlist.txt
+```
+
