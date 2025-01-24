@@ -83,8 +83,8 @@ func displayLoading() {
 
 func main() {
 	// Print logo
-	fmt.Println("\nDNS RESOLVER - by @maurosoria and @whjab")
-	fmt.Println("===========================================")
+	fmt.Println("\nDNS RESOLVER - by @maurosoria and @yhk0")
+	fmt.Println("=========================================")
 
 	// Load parameters and start the flag
 	flag.Parse()
@@ -107,7 +107,8 @@ func main() {
 	// Loading Screen
 	fmt.Print("Loading")
 	displayLoading()
-	fmt.Println("Starting domain resolution...")
+	fmt.Print("\nStarting domain resolution")
+	displayLoading()
 
 	// Divide the domains that found IPs and those that didn't
 	var foundIPs, notFound []string
@@ -128,7 +129,7 @@ func main() {
 					foundIPs = append(foundIPs, fmt.Sprintf("[*] Domain: %s | %s", domain, ip))
 				}
 			} else {
-				notFound = append(notFound, fmt.Sprintf("[!] Domain: %s[?] No IP addresses found.", domain))
+				notFound = append(notFound, fmt.Sprintf("[!] Domain: %s\n L> No IP addresses found.", domain))
 			}
 		}(domain)
 	}
@@ -137,7 +138,7 @@ func main() {
 	wg.Wait()
 
 	// View results found first
-	fmt.Println("\nResults:")
+	fmt.Print("\n\nResults:\n")
 	for _, result := range foundIPs {
 		fmt.Println(result)
 	}
