@@ -19,13 +19,17 @@ $ awk '{print $2}' ip_addresses_verbose > ip_addresses
 ```
 
 ## Go Exemple:
+
+### Usage exemple
+
+![Exemple](exemple.gif)
+
 #### Compile the resolvedomains.go file:
 
-$ go build -o resolvedomains resolvedomains.go
+$ go build -o resolvedomains.exe resolvedomains.go
 
 ```go
 $ cat domainlist.txt | go run .\resolvedomains.go
 or if you compile:
 $ resolvedomains.exe domainlist.txt
 ```
-
