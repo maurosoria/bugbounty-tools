@@ -83,8 +83,9 @@ func displayLoading() {
 
 func main() {
 	// Print logo
-	fmt.Println("\nDNS RESOLVER - by @maurosoria and @yhk0")
-	fmt.Println("=========================================")
+	log.SetFlags(0)
+	fmt.Println("\nDNS RESOLVER - by @maurosoria and @jbz0")
+	fmt.Println("=======================================")
 
 	// Load parameters and start the flag
 	flag.Parse()
